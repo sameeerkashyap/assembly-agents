@@ -1,12 +1,12 @@
-# AssemblyAgents 🏛️
+# Democratic Agents 🏛️
 
 A sophisticated multi-agent system (MAS) for simulating democratic legislative processes using state machine orchestration.
 
 ## Overview
 
-AssemblyAgents moves beyond simple chatbots to implement a structured state machine for simulating legislative democracy. The system orchestrates multiple AI agents through distinct legislative phases, modeling real-world parliamentary procedures.
+Democratic Agents moves beyond simple chatbots to implement a structured state machine for simulating legislative democracy. The system orchestrates multiple AI agents through distinct legislative phases, modeling real-world parliamentary procedures.
 
-![AssemblyAgents](./images/cover.png)
+![Democratic Agents](./images/cover.png)
 
 
 ## Legislative State Machine

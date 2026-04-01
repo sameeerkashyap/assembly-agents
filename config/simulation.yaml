@@ -1,74 +1,56 @@
+# ══════════════════════════════════════════════════════════════════════════════
+# Democratic Agents — Simulation Settings
+# ══════════════════════════════════════════════════════════════════════════════
+
 simulation:
-  # Debate configuration
-  max_debate_rounds: 3
-  debate_time_per_agent: 120  # seconds (for future rate limiting)
-  allow_agent_questions: true  # Agents can ask each other questions
-  
-  # Voting configuration
-  voting_threshold: 0.5  # Simple majority (>50%)
-  require_reasoning: true  # All votes must include reasoning
-  require_data_backing: true  # Votes should reference data/sources
-  
-  # Features
-  enable_web_research: true  # Speaker can scrape web for research
-  enable_memory: true  # Agents remember past decisions
-  enable_fact_checking: false  # Future: verify claims (not implemented)
-  
-  # Memory settings
-  memory_retrieval_limit: 5  # How many past decisions to retrieve per agent
-  memory_similarity_threshold: 0.7  # Semantic similarity for retrieval
+  # Debate rounds per chamber
+  senate_rounds: 3
+  house_rounds: 2
+  executive_rounds: 1     # Cabinet deliberation rounds before presidential decision
+  scotus_rounds: 2        # Conference deliberation rounds before ruling
+
+  # Agent counts (when --agents not specified via CLI)
+  senate_agents: 10       # Balanced R/D subset selected by seniority
+  house_agents: 20
+  scotus_agents: 9        # Always all 9 justices
+
+  # Voting thresholds (applied proportionally to simulated subset)
+  senate_threshold: 0.51
+  senate_cloture_threshold: 0.60
+  house_threshold: 0.51
+  scotus_threshold: 0.556  # 5/9
+  veto_override_threshold: 0.667  # 2/3
+
+  # Memory
+  enable_memory: true
+  memory_retrieval_limit: 5   # Past votes per agent retrieved per session
 
 llm:
-  # LLM provider configuration
-  provider: "openai"  # Options: "openai", "anthropic"
-  model: "gpt-4"  # or "gpt-3.5-turbo", "claude-3-opus-20240229", etc.
-  temperature: 0.7  # Creativity vs consistency (0.0-1.0)
-  max_tokens: 1000  # Max tokens per response
-  
-  # For different agents, you can override:
-  speaker_model: "gpt-4"  # Speaker might need more capable model
-  debate_temperature: 0.8  # Higher creativity during debate
-  voting_temperature: 0.5  # More consistency for voting
+  # Local Hugging Face model used for all roles
+  # Any instruction-tuned model with a chat template works here.
+  # Recommended: meta-llama/Llama-3.1-8B-Instruct, mistralai/Mistral-7B-Instruct-v0.3
+  # For CPU-only or low VRAM: microsoft/Phi-3-mini-4k-instruct
+  model: "meta-llama/Llama-3.2-3B-Instruct"
+
+  # Max new tokens per call
+  debate_max_tokens: 256     # Short turns — agents speak 2-3 sentences
+  vote_max_tokens: 512       # Longer — reasoning + PROS/CONS
+  profile_max_tokens: 4096   # Profile generation needs full JSON output
+
+  # Sampling
+  debate_temperature: 0.8    # More varied speech
+  vote_temperature: 0.4      # More consistent vote reasoning
 
 database:
-  # Database configuration
-  type: "sqlite"
   path: "data/parliament.db"
-  
-  # Schema options
-  auto_create_tables: true
-  enable_checkpointing: true  # For LangGraph state persistence
-  
-  # Performance
-  connection_pool_size: 5
-  enable_wal: true  # Write-Ahead Logging for better concurrency
-
-logging:
-  # Logging configuration
-  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
-  format: "rich"  # "rich" for colored console, "json" for structured logs
-  
-  # Log files
-  file_enabled: true
-  file_path: "logs/parliament.log"
-  file_rotation: "10 MB"
-  file_retention: "30 days"
-  
-  # What to log
-  log_llm_calls: true
-  log_full_prompts: false  # Can be verbose
-  log_agent_reasoning: true
+  enable_checkpointing: true  # LangGraph SqliteSaver for session replay
 
 output:
-  # Output format for session results
-  save_summary: true
-  summary_path: "output/summaries"
-  
-  save_full_transcript: true
-  transcript_path: "output/transcripts"
-  
-  save_voting_records: true
-  voting_path: "output/votes"
-  
-  # Format
-  output_format: "markdown"  # Options: "markdown", "json", "html"
+  summary_dir: "output/summaries"
+  transcript_dir: "output/transcripts"
+  votes_dir: "output/votes"
+  format: "markdown"
+
+logging:
+  level: "INFO"
+  file: "logs/parliament.log"

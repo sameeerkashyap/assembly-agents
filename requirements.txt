@@ -1,50 +1,20 @@
-# Core dependencies for multi-agent system
-numpy>=1.24.0
-pandas>=2.0.0
-
-# State machine
-transitions>=0.9.0
-python-statemachine>=2.1.0
-
-# Multi-agent framework
-langchain>=0.1.0
-langchain-community>=0.0.20
-langchain-openai>=0.0.5
-
-# LangGraph for orchestration
+# LangGraph + LangChain
 langgraph>=0.2.0
-langgraph-checkpoint>=1.0.0
 langgraph-checkpoint-sqlite>=1.0.0
+langchain>=0.3.0
+langchain-huggingface>=0.1.0
 
-# LLM providers (choose based on needs)
-openai>=1.10.0
-anthropic>=0.8.0
+# Local LLM — transformers loads GGUF natively (>=4.45)
+transformers>=4.45.0
+accelerate>=0.27.0
 
-# Agent orchestration
-autogen-agentchat>=0.2.0
-pydantic>=2.5.0
-
-# Configuration management
-python-dotenv>=1.0.0
+# Config + utilities
 pyyaml>=6.0
-
-# Logging and monitoring
-loguru>=0.7.0
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+click>=8.1.0
 rich>=13.7.0
 
 # Testing
 pytest>=7.4.0
 pytest-asyncio>=0.21.0
-pytest-cov>=4.1.0
-
-# Code quality
-black>=23.12.0
-flake8>=7.0.0
-mypy>=1.8.0
-
-# Utilities
-tqdm>=4.66.0
-click>=8.1.0
-
-# Data serialization
-msgpack>=1.0.0

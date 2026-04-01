@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AssemblyBots - Parliamentary Multi-Agent Simulation
+Democratic Agents - Parliamentary Multi-Agent Simulation
 Main entry point for running parliamentary sessions
 """
 
@@ -12,7 +12,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from parliament_graph import run_parliamentary_session
-from config_loader import ConfigLoader
 
 
 def main():
@@ -20,103 +19,135 @@ def main():
     parser = argparse.ArgumentParser(
         description="Run a parliamentary simulation with multi-agent debate and voting"
     )
-    
+
     # Bill input
     parser.add_argument(
         "--bill",
         type=str,
-        required=True,
-        help="Path to bill text file"
+        required=False,
+        help="Path to bill text file",
     )
-    
-    # Configuration
+
+    # Chamber selection
     parser.add_argument(
-        "--config-dir",
+        "--chamber",
         type=str,
-        default="config",
-        help="Directory containing config files (default: config/)"
+        default="senate",
+        choices=["senate", "house", "executive", "scotus", "all"],
+        help="Which chamber(s) to simulate (default: senate)",
     )
-    
+
+    # Agent selection
+    parser.add_argument(
+        "--agents",
+        type=str,
+        default=None,
+        help='Comma-separated list of agent names to include, e.g. "Bernie Sanders,Ted Cruz"',
+    )
+
+    parser.add_argument(
+        "--n-agents",
+        type=int,
+        default=10,
+        help="Number of agents to load from profiles when --agents not specified (default: 10)",
+    )
+
     # Simulation settings
     parser.add_argument(
-        "--max-rounds",
+        "--rounds",
         type=int,
         default=3,
-        help="Maximum number of debate rounds (default: 3)"
+        help="Number of debate rounds per chamber (default: 3)",
     )
-    
+
     parser.add_argument(
         "--session-id",
         type=str,
         default=None,
-        help="Optional session ID (auto-generated if not provided)"
+        help="Optional session ID (auto-generated if not provided)",
     )
-    
+
+    # View past session
+    parser.add_argument(
+        "--view-session",
+        type=str,
+        default=None,
+        help="View transcript of a past session by ID",
+    )
+
     # Output options
     parser.add_argument(
         "--output",
         type=str,
         default=None,
-        help="Save summary to this file (optional)"
+        help="Save summary to this file path (optional)",
     )
-    
+
     parser.add_argument(
         "--verbose",
         action="store_true",
-        help="Print detailed debug information"
+        help="Print detailed debug information",
     )
-    
+
     args = parser.parse_args()
-    
-    # Load bill
+
+    # ── View past session ────────────────────────────────────────────────────
+    if args.view_session:
+        # TODO: Implement session replay from SQLite checkpointer
+        # Query data/parliament.db for session_id and print transcript + vote record
+        print(f"[TODO] Session replay not yet implemented. Session ID: {args.view_session}")
+        sys.exit(0)
+
+    # ── Load bill ────────────────────────────────────────────────────────────
+    if not args.bill:
+        parser.error("--bill is required unless --view-session is used")
+
     bill_path = Path(args.bill)
     if not bill_path.exists():
         print(f"Error: Bill file not found: {bill_path}")
         sys.exit(1)
-    
-    with open(bill_path, 'r') as f:
+
+    with open(bill_path) as f:
         bill_text = f.read()
-    
-    bill_title = bill_path.stem.replace('_', ' ').title()
-    
-    # Load configuration
-    print(f"Loading configuration from {args.config_dir}/")
-    loader = ConfigLoader(args.config_dir)
-    
-    agents = loader.load_agents()
-    prompts = loader.load_system_prompts()
-    sim_config = loader.load_simulation_config()
-    
-    print(f"Loaded {len(agents)} agents:")
-    for agent in agents:
-        print(f"  - {agent.id}: {agent.role} ({agent.party})")
-    
-    # Run simulation
-    print(f"\nStarting parliamentary session...")
-    print(f"Bill: {bill_title}")
-    print(f"Max debate rounds: {args.max_rounds}")
+
+    bill_title = bill_path.stem.replace("_", " ").title()
+
+    # ── Parse agent list ─────────────────────────────────────────────────────
+    agent_names = None
+    if args.agents:
+        agent_names = [name.strip() for name in args.agents.split(",")]
+
+    # ── Run simulation ───────────────────────────────────────────────────────
+    print(f"Bill:     {bill_title}")
+    print(f"Chamber:  {args.chamber}")
+    print(f"Rounds:   {args.rounds}")
+    if agent_names:
+        print(f"Agents:   {', '.join(agent_names)}")
+    else:
+        print(f"Agents:   top {args.n_agents} from profiles")
     print("=" * 80)
-    
+
     result = run_parliamentary_session(
         bill_title=bill_title,
         bill_text=bill_text,
-        max_debate_rounds=args.max_rounds,
-        session_id=args.session_id
+        chamber=args.chamber,
+        agent_names=agent_names,
+        n_agents=args.n_agents,
+        max_debate_rounds=args.rounds,
+        session_id=args.session_id,
     )
-    
-    # Save output if requested
+
+    # ── Save output ───────────────────────────────────────────────────────────
     if args.output:
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        
-        with open(output_path, 'w') as f:
-            f.write(result["proceedings_summary"])
-        
+        with open(output_path, "w") as f:
+            f.write(result.get("proceedings_summary", ""))
         print(f"\nSummary saved to: {output_path}")
-    
-    print("\n✓ Session complete!")
-    print(f"Session ID: {result['session_id']}")
-    print(f"Result: {result['vote_result']}")
+
+    print("\nSession complete!")
+    print(f"Session ID: {result.get('session_id', 'N/A')}")
+    print(f"Result:     {result.get('vote_result', 'N/A')}")
 
 
 if __name__ == "__main__":

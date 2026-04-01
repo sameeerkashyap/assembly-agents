@@ -1,0 +1,904 @@
+# ══════════════════════════════════════════════════════════════════════════════
+# Democratic Agents — Member Rosters
+# Source: ai-gov-simulator/lib/rosters.js (119th Congress, March 2026)
+#
+# Edit this file to add/remove members or update committees.
+# Members with a `note` containing "Resigned", "Retired", or "Lost" are
+# automatically skipped during profile generation (returned as no_longer_serving).
+# ══════════════════════════════════════════════════════════════════════════════
+
+senate:
+  # ── REPUBLICANS ──────────────────────────────────────────────────────────
+  - name: John Thune
+    state: SD
+    party: R
+    committees: [Finance, Commerce, Agriculture]
+    seniority: 20
+    leadership: Majority Leader
+    classNum: 3
+
+  - name: John Barrasso
+    state: WY
+    party: R
+    committees: [Energy, Foreign Relations, Indian Affairs]
+    seniority: 18
+    leadership: Majority Whip
+    classNum: 1
+
+  - name: Mitch McConnell
+    state: KY
+    party: R
+    committees: [Appropriations, Rules]
+    seniority: 40
+    classNum: 2
+
+  - name: Chuck Grassley
+    state: IA
+    party: R
+    committees: [Judiciary, Finance, Agriculture, Budget]
+    seniority: 44
+    leadership: President Pro Tempore
+    classNum: 3
+
+  - name: Susan Collins
+    state: ME
+    party: R
+    committees: [Appropriations, Intelligence, HELP]
+    seniority: 28
+    classNum: 2
+
+  - name: Lisa Murkowski
+    state: AK
+    party: R
+    committees: [Appropriations, Energy, Indian Affairs, HELP]
+    seniority: 22
+    classNum: 3
+
+  - name: John Cornyn
+    state: TX
+    party: R
+    committees: [Judiciary, Finance, Intelligence]
+    seniority: 22
+    classNum: 2
+
+  - name: Lindsey Graham
+    state: SC
+    party: R
+    committees: [Judiciary, Appropriations, Budget]
+    seniority: 22
+    classNum: 2
+
+  - name: Rand Paul
+    state: KY
+    party: R
+    committees: [Foreign Relations, HELP, Homeland Security, Small Business]
+    seniority: 14
+    classNum: 3
+
+  - name: Mike Lee
+    state: UT
+    party: R
+    committees: [Judiciary, Commerce, Energy, Joint Economic]
+    seniority: 14
+    classNum: 3
+
+  - name: Jerry Moran
+    state: KS
+    party: R
+    committees: [Appropriations, Commerce, Veterans Affairs, Indian Affairs]
+    seniority: 14
+    classNum: 3
+
+  - name: Ron Johnson
+    state: WI
+    party: R
+    committees: [Homeland Security, Budget, Commerce, Foreign Relations]
+    seniority: 14
+    classNum: 3
+
+  - name: Ted Cruz
+    state: TX
+    party: R
+    committees: [Judiciary, Commerce, Foreign Relations, Rules]
+    seniority: 12
+    classNum: 1
+
+  - name: Tim Scott
+    state: SC
+    party: R
+    committees: [Banking, Finance, HELP]
+    seniority: 12
+    classNum: 3
+
+  - name: Shelley Moore Capito
+    state: WV
+    party: R
+    committees: [Appropriations, Commerce, Environment, Rules]
+    seniority: 10
+    classNum: 2
+
+  - name: Tom Cotton
+    state: AR
+    party: R
+    committees: [Armed Services, Intelligence, Judiciary]
+    seniority: 10
+    classNum: 2
+
+  - name: Joni Ernst
+    state: IA
+    party: R
+    committees: [Armed Services, Agriculture, Commerce, Small Business]
+    seniority: 10
+    classNum: 2
+
+  - name: Dan Sullivan
+    state: AK
+    party: R
+    committees: [Armed Services, Commerce, Environment, Veterans Affairs]
+    seniority: 10
+    classNum: 2
+
+  - name: Thom Tillis
+    state: NC
+    party: R
+    committees: [Judiciary, Armed Services, Banking, Veterans Affairs]
+    seniority: 10
+    classNum: 2
+
+  - name: Bill Cassidy
+    state: LA
+    party: R
+    committees: [Finance, Energy, HELP, Veterans Affairs]
+    seniority: 10
+    classNum: 2
+
+  - name: Mike Rounds
+    state: SD
+    party: R
+    committees: [Armed Services, Banking, Intelligence, Veterans Affairs]
+    seniority: 10
+    classNum: 2
+
+  - name: James Lankford
+    state: OK
+    party: R
+    committees: [Appropriations, Finance, Homeland Security, Indian Affairs]
+    seniority: 10
+    classNum: 3
+
+  - name: Steve Daines
+    state: MT
+    party: R
+    committees: [Appropriations, Energy, Finance, Indian Affairs]
+    seniority: 10
+    classNum: 2
+
+  - name: Todd Young
+    state: IN
+    party: R
+    committees: [Finance, Commerce, Foreign Relations, Small Business]
+    seniority: 8
+    classNum: 3
+
+  - name: John Kennedy
+    state: LA
+    party: R
+    committees: [Appropriations, Banking, Budget, Judiciary]
+    seniority: 8
+    classNum: 3
+
+  - name: Marsha Blackburn
+    state: TN
+    party: R
+    committees: [Judiciary, Commerce, Armed Services, Veterans Affairs]
+    seniority: 6
+    classNum: 1
+
+  - name: Kevin Cramer
+    state: ND
+    party: R
+    committees: [Armed Services, Banking, Environment, Veterans Affairs]
+    seniority: 6
+    classNum: 1
+
+  - name: Josh Hawley
+    state: MO
+    party: R
+    committees: [Judiciary, Commerce, Homeland Security, Small Business]
+    seniority: 6
+    classNum: 1
+
+  - name: Rick Scott
+    state: FL
+    party: R
+    committees: [Armed Services, Commerce, Budget, Homeland Security]
+    seniority: 6
+    classNum: 1
+
+  - name: Roger Wicker
+    state: MS
+    party: R
+    committees: [Armed Services, Commerce, Environment, Rules]
+    seniority: 16
+    classNum: 1
+
+  - name: Roger Marshall
+    state: KS
+    party: R
+    committees: [Agriculture, HELP, Small Business, Budget]
+    seniority: 4
+    classNum: 2
+
+  - name: Bill Hagerty
+    state: TN
+    party: R
+    committees: [Banking, Foreign Relations, Appropriations, Rules]
+    seniority: 4
+    classNum: 2
+
+  - name: Cynthia Lummis
+    state: WY
+    party: R
+    committees: [Banking, Commerce, Environment]
+    seniority: 4
+    classNum: 2
+
+  - name: Tommy Tuberville
+    state: AL
+    party: R
+    committees: [Armed Services, Agriculture, Veterans Affairs, HELP]
+    seniority: 4
+    classNum: 2
+
+  - name: Katie Britt
+    state: AL
+    party: R
+    committees: [Appropriations, Banking, Rules]
+    seniority: 2
+    classNum: 3
+
+  - name: Markwayne Mullin
+    state: OK
+    party: R
+    committees: [Armed Services, Environment, HELP, Indian Affairs]
+    seniority: 2
+    classNum: 3
+    note: Nominated for DHS Secretary March 2026
+
+  - name: Ted Budd
+    state: NC
+    party: R
+    committees: [Armed Services, Commerce, HELP, Small Business]
+    seniority: 2
+    classNum: 3
+
+  - name: Eric Schmitt
+    state: MO
+    party: R
+    committees: [Armed Services, Commerce, Judiciary, Joint Economic]
+    seniority: 2
+    classNum: 1
+
+  - name: Pete Ricketts
+    state: NE
+    party: R
+    committees: [Armed Services, Commerce, Environment, Foreign Relations]
+    seniority: 2
+    classNum: 1
+
+  - name: Tim Sheehy
+    state: MT
+    party: R
+    committees: [Armed Services, Commerce, Indian Affairs, Veterans Affairs]
+    seniority: 0
+    classNum: 2
+
+  - name: Jim Justice
+    state: WV
+    party: R
+    committees: [Agriculture, Environment, Veterans Affairs]
+    seniority: 0
+    classNum: 2
+
+  - name: Dave McCormick
+    state: PA
+    party: R
+    committees: [Banking, Armed Services, Agriculture]
+    seniority: 0
+    classNum: 1
+
+  - name: Bernie Moreno
+    state: OH
+    party: R
+    committees: [Banking, Commerce, Homeland Security]
+    seniority: 0
+    classNum: 1
+
+  - name: Jim Banks
+    state: IN
+    party: R
+    committees: [Armed Services, Banking, Veterans Affairs]
+    seniority: 0
+    classNum: 3
+
+  - name: John Curtis
+    state: UT
+    party: R
+    committees: [Energy, Commerce, Foreign Relations]
+    seniority: 0
+    classNum: 1
+
+  - name: Ashley Moody
+    state: FL
+    party: R
+    committees: [Judiciary, Commerce, Homeland Security]
+    seniority: 0
+    classNum: 1
+    note: Appointed to replace Rubio
+
+  - name: Deb Fischer
+    state: NE
+    party: R
+    committees: [Armed Services, Commerce, Agriculture]
+    seniority: 12
+    classNum: 1
+
+  - name: Mike Crapo
+    state: ID
+    party: R
+    committees: [Finance, Banking, Judiciary, Budget]
+    seniority: 26
+    classNum: 3
+
+  - name: Jim Risch
+    state: ID
+    party: R
+    committees: [Foreign Relations, Energy, Intelligence, Small Business]
+    seniority: 16
+    classNum: 2
+
+  - name: John Hoeven
+    state: ND
+    party: R
+    committees: [Appropriations, Agriculture, Energy, Indian Affairs]
+    seniority: 14
+    classNum: 3
+
+  # Departed — skipped during generation
+  - name: Mike Braun
+    state: IN
+    party: R
+    committees: []
+    seniority: 0
+    classNum: 1
+    note: Resigned to become IN Governor
+
+  - name: J.D. Vance
+    state: OH
+    party: R
+    committees: []
+    seniority: 0
+    leadership: Vice President (resigned Senate)
+    classNum: 1
+
+  - name: Marco Rubio
+    state: FL
+    party: R
+    committees: []
+    seniority: 0
+    classNum: 3
+    note: Resigned Jan 2025, now Secretary of State
+
+  # ── DEMOCRATS ────────────────────────────────────────────────────────────
+  - name: Chuck Schumer
+    state: NY
+    party: D
+    committees: [Rules]
+    seniority: 26
+    leadership: Minority Leader
+    classNum: 3
+
+  - name: Dick Durbin
+    state: IL
+    party: D
+    committees: [Judiciary, Appropriations]
+    seniority: 28
+    leadership: Minority Whip
+    classNum: 2
+
+  - name: Patty Murray
+    state: WA
+    party: D
+    committees: [Appropriations, HELP, Veterans Affairs, Budget]
+    seniority: 32
+    classNum: 3
+
+  - name: Ron Wyden
+    state: OR
+    party: D
+    committees: [Finance, Intelligence, Budget, Energy]
+    seniority: 28
+    classNum: 3
+
+  - name: Maria Cantwell
+    state: WA
+    party: D
+    committees: [Commerce, Finance, Indian Affairs, Small Business]
+    seniority: 24
+    classNum: 1
+
+  - name: Amy Klobuchar
+    state: MN
+    party: D
+    committees: [Judiciary, Commerce, Rules, Agriculture]
+    seniority: 18
+    classNum: 1
+
+  - name: Sheldon Whitehouse
+    state: RI
+    party: D
+    committees: [Judiciary, Finance, Budget, Environment]
+    seniority: 18
+    classNum: 1
+
+  - name: Elizabeth Warren
+    state: MA
+    party: D
+    committees: [Banking, Finance, Armed Services]
+    seniority: 12
+    classNum: 1
+
+  - name: Tim Kaine
+    state: VA
+    party: D
+    committees: [Armed Services, Foreign Relations, HELP, Budget]
+    seniority: 12
+    classNum: 1
+
+  - name: Mazie Hirono
+    state: HI
+    party: D
+    committees: [Judiciary, Armed Services, Energy, Veterans Affairs]
+    seniority: 12
+    classNum: 1
+
+  - name: Martin Heinrich
+    state: NM
+    party: D
+    committees: [Appropriations, Armed Services, Energy, Intelligence]
+    seniority: 12
+    classNum: 1
+
+  - name: Ed Markey
+    state: MA
+    party: D
+    committees: [Commerce, Foreign Relations, Environment, Small Business]
+    seniority: 12
+    classNum: 2
+
+  - name: Cory Booker
+    state: NJ
+    party: D
+    committees: [Judiciary, Foreign Relations, Small Business, Environment]
+    seniority: 10
+    classNum: 2
+
+  - name: Chris Murphy
+    state: CT
+    party: D
+    committees: [Foreign Relations, Appropriations, HELP]
+    seniority: 12
+    classNum: 1
+
+  - name: Brian Schatz
+    state: HI
+    party: D
+    committees: [Appropriations, Commerce, Indian Affairs]
+    seniority: 12
+    classNum: 3
+
+  - name: Tammy Baldwin
+    state: WI
+    party: D
+    committees: [Appropriations, Commerce, HELP]
+    seniority: 12
+    classNum: 1
+
+  - name: Chris Van Hollen
+    state: MD
+    party: D
+    committees: [Appropriations, Banking, Foreign Relations, Budget]
+    seniority: 8
+    classNum: 3
+
+  - name: Tammy Duckworth
+    state: IL
+    party: D
+    committees: [Armed Services, Commerce, Environment, Small Business]
+    seniority: 8
+    classNum: 3
+
+  - name: Catherine Cortez Masto
+    state: NV
+    party: D
+    committees: [Banking, Finance, Indian Affairs, Rules]
+    seniority: 8
+    classNum: 3
+
+  - name: Gary Peters
+    state: MI
+    party: D
+    committees: [Homeland Security, Armed Services, Commerce]
+    seniority: 10
+    classNum: 2
+
+  - name: Michael Bennet
+    state: CO
+    party: D
+    committees: [Finance, Agriculture, Intelligence]
+    seniority: 16
+    classNum: 3
+
+  - name: Kirsten Gillibrand
+    state: NY
+    party: D
+    committees: [Armed Services, Agriculture, Intelligence]
+    seniority: 16
+    classNum: 1
+
+  - name: Jeff Merkley
+    state: OR
+    party: D
+    committees: [Foreign Relations, Appropriations, Environment, Budget]
+    seniority: 16
+    classNum: 2
+
+  - name: Richard Blumenthal
+    state: CT
+    party: D
+    committees: [Judiciary, Armed Services, Commerce, Veterans Affairs]
+    seniority: 14
+    classNum: 3
+
+  - name: Tina Smith
+    state: MN
+    party: D
+    committees: [Agriculture, Banking, HELP, Indian Affairs]
+    seniority: 6
+    classNum: 2
+
+  - name: Jacky Rosen
+    state: NV
+    party: D
+    committees: [Armed Services, Commerce, HELP, Small Business]
+    seniority: 6
+    classNum: 1
+
+  - name: Jon Ossoff
+    state: GA
+    party: D
+    committees: [Judiciary, Banking, Homeland Security, Rules]
+    seniority: 4
+    classNum: 2
+
+  - name: Alex Padilla
+    state: CA
+    party: D
+    committees: [Judiciary, Environment, Budget, Homeland Security]
+    seniority: 4
+    classNum: 3
+
+  - name: Mark Kelly
+    state: AZ
+    party: D
+    committees: [Armed Services, Energy, Intelligence, Joint Economic]
+    seniority: 4
+    classNum: 1
+
+  - name: Raphael Warnock
+    state: GA
+    party: D
+    committees: [Banking, Agriculture, Commerce, Joint Economic]
+    seniority: 4
+    classNum: 3
+
+  - name: John Fetterman
+    state: PA
+    party: D
+    committees: [Agriculture, Banking, Environment]
+    seniority: 2
+    classNum: 1
+
+  - name: Peter Welch
+    state: VT
+    party: D
+    committees: [Agriculture, Judiciary, Rules]
+    seniority: 2
+    classNum: 1
+
+  - name: Ruben Gallego
+    state: AZ
+    party: D
+    committees: [Armed Services, Veterans Affairs, Indian Affairs]
+    seniority: 0
+    classNum: 1
+
+  - name: Elissa Slotkin
+    state: MI
+    party: D
+    committees: [Armed Services, Homeland Security]
+    seniority: 0
+    classNum: 2
+
+  - name: Lisa Blunt Rochester
+    state: DE
+    party: D
+    committees: [Finance, Agriculture]
+    seniority: 0
+    classNum: 2
+
+  - name: Angela Alsobrooks
+    state: MD
+    party: D
+    committees: [Banking, Judiciary]
+    seniority: 0
+    classNum: 3
+
+  - name: Andy Kim
+    state: NJ
+    party: D
+    committees: [Foreign Relations, Armed Services]
+    seniority: 0
+    classNum: 2
+
+  - name: Adam Schiff
+    state: CA
+    party: D
+    committees: [Judiciary, Intelligence]
+    seniority: 0
+    classNum: 3
+
+  - name: Jack Reed
+    state: RI
+    party: D
+    committees: [Armed Services, Appropriations, Banking]
+    seniority: 28
+    classNum: 2
+
+  - name: Mark Warner
+    state: VA
+    party: D
+    committees: [Intelligence, Banking, Finance, Budget, Rules]
+    seniority: 16
+    classNum: 2
+
+  - name: Jeanne Shaheen
+    state: NH
+    party: D
+    committees: [Appropriations, Armed Services, Foreign Relations]
+    seniority: 16
+    classNum: 2
+
+  - name: Maggie Hassan
+    state: NH
+    party: D
+    committees: [Finance, HELP, Homeland Security]
+    seniority: 8
+    classNum: 3
+
+  # Departed
+  - name: Debbie Stabenow
+    state: MI
+    party: D
+    committees: []
+    seniority: 0
+    classNum: 1
+    note: Retired 2024
+
+  - name: Bob Casey
+    state: PA
+    party: D
+    committees: []
+    seniority: 0
+    classNum: 1
+    note: Lost 2024 election
+
+  - name: Ben Cardin
+    state: MD
+    party: D
+    committees: []
+    seniority: 0
+    classNum: 1
+    note: Retired 2024
+
+  # ── INDEPENDENTS ─────────────────────────────────────────────────────────
+  - name: Bernie Sanders
+    state: VT
+    party: I
+    committees: [HELP, Budget, Energy, Veterans Affairs]
+    seniority: 18
+    classNum: 1
+    note: Caucuses with Democrats
+
+  - name: Angus King
+    state: ME
+    party: I
+    committees: [Armed Services, Energy, Intelligence, Rules]
+    seniority: 12
+    classNum: 1
+    note: Caucuses with Democrats
+
+executive:
+  - name: Donald Trump
+    role: President
+    department: White House
+    background: "Real estate mogul, 45th President (2017-2021), 47th President (2025-). Key priorities: immigration enforcement, tariffs, deregulation, 'America First' foreign policy."
+
+  - name: J.D. Vance
+    role: Vice President
+    department: White House
+    background: "Former Senator (OH), venture capitalist, author of Hillbilly Elegy. Populist-right on economics, hawkish on China, skeptical of Ukraine aid."
+
+  - name: Marco Rubio
+    role: Secretary of State
+    department: State
+    background: "Former Senator (FL), confirmed 99-0. Hawkish on China and Cuba, interventionist, traditional Republican foreign policy with MAGA alignment."
+
+  - name: Scott Bessent
+    role: Secretary of the Treasury
+    department: Treasury
+    background: "Hedge fund manager, Key Square Group founder. Advocates '3-3-3' plan: 3% GDP growth, 3% deficit, 3M barrels/day new oil production."
+
+  - name: Pete Hegseth
+    role: Secretary of Defense
+    department: Defense
+    background: "Fox News host, Army veteran (Iraq, Afghanistan, Guantanamo). Controversial confirmation. Focus on 'warrior culture', skeptical of DEI in military."
+
+  - name: Pam Bondi
+    role: Attorney General
+    department: Justice
+    background: "Former Florida AG. Trump legal adviser during first impeachment. Expected to pursue immigration enforcement, challenge state-level progressive DAs."
+
+  - name: Doug Burgum
+    role: Secretary of the Interior
+    department: Interior
+    background: "Former North Dakota Governor, software entrepreneur (Great Plains Software). Pro-energy development on federal lands."
+
+  - name: Brooke Rollins
+    role: Secretary of Agriculture
+    department: Agriculture
+    background: "Former head of America First Policy Institute. Texas A&M grad. Focus on deregulation of farming, trade deals for agricultural exports."
+
+  - name: Howard Lutnick
+    role: Secretary of Commerce
+    department: Commerce
+    background: "CEO of Cantor Fitzgerald (rebuilt after 9/11). Pro-tariff, advocates reshoring manufacturing. Led Trump transition team."
+
+  - name: Lori Chavez-DeRemer
+    role: Secretary of Labor
+    department: Labor
+    background: "Former Oregon Congresswoman. Notably moderate — one of few Republicans to support PRO Act provisions. Pro-union stances unusual for GOP."
+
+  - name: Robert F. Kennedy Jr.
+    role: Secretary of HHS
+    department: Health and Human Services
+    background: "Environmental lawyer turned health skeptic. Vaccine-critical, anti-processed food, anti-pharma. Heterodox: liberal on environment, populist on health."
+
+  - name: Scott Turner
+    role: Secretary of HUD
+    department: Housing and Urban Development
+    background: "Former NFL player, led White House Opportunity and Revitalization Council in Trump's first term. Focus on Opportunity Zones."
+
+  - name: Sean Duffy
+    role: Secretary of Transportation
+    department: Transportation
+    background: "Former Wisconsin Congressman (2010-2019), Fox Business host. Traditional conservative, focus on infrastructure permitting reform."
+
+  - name: Chris Wright
+    role: Secretary of Energy
+    department: Energy
+    background: "CEO of Liberty Energy (fracking). Outspoken climate skeptic, authored 'Bettering Human Lives' manifesto defending fossil fuels. Will push LNG exports, nuclear."
+
+  - name: Linda McMahon
+    role: Secretary of Education
+    department: Education
+    background: "Former WWE CEO. Ran SBA in Trump's first term. Strong school choice advocate. May oversee potential restructuring/downsizing of Department of Education."
+
+  - name: Doug Collins
+    role: Secretary of Veterans Affairs
+    department: Veterans Affairs
+    background: "Former Georgia Congressman, Air Force Reserve chaplain. Vocal Trump ally during first impeachment. Focus on VA accountability."
+
+  - name: Susie Wiles
+    role: White House Chief of Staff
+    department: White House
+    background: "First female Chief of Staff. Florida political operative, Trump 2024 campaign co-chair. Known for discipline and message control."
+
+  - name: Russell Vought
+    role: Director of OMB
+    department: Office of Management and Budget
+    background: "Project 2025 architect. Served as OMB director in Trump's first term. Aggressive budget cutter, wants to dismantle administrative state."
+
+  - name: Tulsi Gabbard
+    role: Director of National Intelligence
+    department: Intelligence Community
+    background: "Former Hawaii Congresswoman (D turned R), Army veteran. Non-interventionist foreign policy, skeptical of intelligence community."
+
+  - name: Lee Zeldin
+    role: EPA Administrator
+    department: Environmental Protection Agency
+    background: "Former New York Congressman, ran for NY Governor 2022. Deregulation focus, rolling back Biden-era EPA rules on emissions and water."
+
+  - name: John Ratcliffe
+    role: CIA Director
+    department: Central Intelligence Agency
+    background: "Former DNI in Trump's first term, former Texas Congressman. Hawkish on China, advocates CIA reform and reduced 'politicization'."
+
+  - name: Jamieson Greer
+    role: U.S. Trade Representative
+    department: Trade
+    background: "Former chief of staff to Robert Lighthizer. Architect of Trump tariff strategy. Trade hawk, advocates decoupling from China."
+
+scotus:
+  - name: John Roberts
+    role: Chief Justice
+    appointedBy: George W. Bush
+    year: 2005
+    priorRole: D.C. Circuit Judge, Deputy Solicitor General
+    background: "Institutionalist conservative. Increasingly the swing vote as median justice. Sided with liberals on ACA (2012, 2015, 2021), census citizenship question. Prioritizes Court legitimacy and incrementalism."
+
+  - name: Clarence Thomas
+    role: Associate Justice
+    appointedBy: George H.W. Bush
+    year: 1991
+    priorRole: D.C. Circuit Judge, EEOC Chairman
+    background: "Most conservative justice. Originalist willing to overturn virtually any precedent he considers wrong. Wrote concurrences calling for overturning Chevron (before Loper Bright), New York Times v. Sullivan, Griswold v. Connecticut."
+
+  - name: Samuel Alito
+    role: Associate Justice
+    appointedBy: George W. Bush
+    year: 2006
+    priorRole: Third Circuit Judge, U.S. Attorney (NJ)
+    background: "Reliable conservative, author of Dobbs (overturning Roe). Strong on religious liberty, executive power, skeptical of regulatory state. More incrementalist than Thomas but reaches similar conclusions."
+
+  - name: Sonia Sotomayor
+    role: Associate Justice
+    appointedBy: Barack Obama
+    year: 2009
+    priorRole: Second Circuit Judge, District Court Judge
+    background: "Most liberal justice. Passionate dissenter, especially on criminal justice, race, and immigration. Former prosecutor gives her credibility on criminal law. Grew up in Bronx public housing."
+
+  - name: Elena Kagan
+    role: Associate Justice
+    appointedBy: Barack Obama
+    year: 2010
+    priorRole: Solicitor General, Harvard Law Dean
+    background: "Strategic liberal. Best writer on the Court. Often crafts narrow opinions to attract conservative votes. Her Loper Bright dissent (defending Chevron) was landmark. Never served as judge before SCOTUS."
+
+  - name: Neil Gorsuch
+    role: Associate Justice
+    appointedBy: Donald Trump
+    year: 2017
+    priorRole: Tenth Circuit Judge
+    background: "Textualist with libertarian streak. Authored Bostock (LGBTQ employment rights) based on statutory text despite conservative opposition. Strong on Native American treaty rights, anti-administrative state (key vote in Loper Bright)."
+
+  - name: Brett Kavanaugh
+    role: Associate Justice
+    appointedBy: Donald Trump
+    year: 2018
+    priorRole: D.C. Circuit Judge, Bush White House Staff Secretary
+    background: "Incrementalist conservative. Current median justice. Often writes narrow concurrences limiting how far majority opinions go. Strong on executive power (worked for Ken Starr, then Bush White House)."
+
+  - name: Amy Coney Barrett
+    role: Associate Justice
+    appointedBy: Donald Trump
+    year: 2020
+    priorRole: Seventh Circuit Judge, Notre Dame Law professor
+    background: "Originalist conservative but has shown more independence than expected. Departed from Thomas/Alito on ghost gun case, some standing questions. Strong on religious liberty. Academic temperament."
+
+  - name: Ketanji Brown Jackson
+    role: Associate Justice
+    appointedBy: Joe Biden
+    year: 2022
+    priorRole: D.C. Circuit Judge, U.S. Sentencing Commission
+    background: "Liberal with focus on historical context and race. Former public defender — brings criminal defense perspective rare on modern Court. Bold early opinions. Engaged questioner at oral argument."
