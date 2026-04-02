@@ -23,42 +23,27 @@ Output schema:
 
 from __future__ import annotations
 import json
-from typing import Optional
+from langchain_core.messages import HumanMessage, SystemMessage
 
 # Matches ai-gov-simulator's BILL_SYSTEM_PROMPT (app/api/analyze-bill/route.js)
-BILL_ANALYSIS_SYSTEM = """You are a congressional policy analyst. Given a bill description, return ONLY a JSON object (no markdown, no backticks) with this exact schema:
+BILL_ANALYSIS_SYSTEM = """You are a congressional policy analyst. Return ONLY a compact JSON object — no markdown, no backticks, no extra whitespace.
 
-{
-  "name": "Short official-sounding bill title",
-  "summary": "One sentence description",
-  "issueWeights": {
-    "immigration": 0.0, "taxes_spending": 0.0, "healthcare": 0.0,
-    "gun_rights": 0.0, "climate_energy": 0.0, "defense_military": 0.0,
-    "education": 0.0, "tech_regulation": 0.0, "criminal_justice": 0.0,
-    "trade_tariffs": 0.0, "abortion_social": 0.0, "government_spending": 0.0,
-    "foreign_policy_hawks": 0.0, "civil_liberties": 0.0, "labor_unions": 0.0
-  },
-  "issuePositions": {},
-  "partySupport": "R or D or bipartisan",
-  "affectedIndustries": ["industry1", "industry2"],
-  "constitutionalIssues": {},
-  "constitutionalPosition": {},
-  "committees": ["Committee1"],
-  "controversy_level": 0.0,
-  "startChamber": "hou or sen",
-  "factions": {
-    "supporters": "Who supports this and why (one sentence)",
-    "opponents": "Who opposes this and why (one sentence)"
-  }
-}
+Rules to keep output short:
+- issueWeights: include ALL 15 keys, but set irrelevant ones to 0.0
+- issuePositions: ONLY include keys where issueWeight > 0 (omit zeros)
+- constitutionalIssues: ONLY include if bill raises a constitutional question (omit if empty)
+- constitutionalPosition: same — omit if empty
+- affectedIndustries: max 3 items, each under 20 chars
+- committees: max 2 items
+- factions.supporters and factions.opponents: max 8 words each
+- summary: max 15 words
 
-issueWeights: how much each issue matters to this bill (0.0=irrelevant, 1.0=core issue).
-issuePositions: what POSITION this bill takes on each relevant issue (0.0=most liberal, 1.0=most conservative). Only include issues where weight > 0.
-controversy_level: 0.0=routine, 1.0=maximally divisive.
-Only return JSON, nothing else."""
+Schema (fill in values, omit empty optional fields):
+{"name":"<title>","summary":"<15 words max>","issueWeights":{"immigration":0.0,"taxes_spending":0.0,"healthcare":0.0,"gun_rights":0.0,"climate_energy":0.0,"defense_military":0.0,"education":0.0,"tech_regulation":0.0,"criminal_justice":0.0,"trade_tariffs":0.0,"abortion_social":0.0,"government_spending":0.0,"foreign_policy_hawks":0.0,"civil_liberties":0.0,"labor_unions":0.0},"issuePositions":{},"partySupport":"R|D|bipartisan","affectedIndustries":[],"committees":[],"controversy_level":0.0,"startChamber":"hou|sen","factions":{"supporters":"<8 words>","opponents":"<8 words>"}}
 
+Only return JSON."""
 
-def analyze_bill(bill_text: str, llm=None) -> dict:
+def analyze_bill(bill_text: str, llm=None , context: str = "", ) -> dict:
     """
     Convert raw bill text into a structured BillAnalysis dict.
 
@@ -75,11 +60,11 @@ def analyze_bill(bill_text: str, llm=None) -> dict:
         # Stub for testing without an LLM
         return _stub_analysis(bill_text)
 
-    from langchain_core.messages import HumanMessage, SystemMessage
+    content = f"{bill_text} \n\nBackground research: {context}"
 
     messages = [
         SystemMessage(content=BILL_ANALYSIS_SYSTEM),
-        HumanMessage(content=bill_text),
+        HumanMessage(content=content),
     ]
 
     response = llm.invoke(messages)
@@ -95,9 +80,49 @@ def analyze_bill(bill_text: str, llm=None) -> dict:
 
     try:
         return json.loads(clean)
-    except json.JSONDecodeError as e:
-        # TODO: Add retry logic here — re-call LLM with stricter prompt on parse failure
-        raise ValueError(f"Bill analysis returned invalid JSON: {e}\nRaw: {raw[:200]}")
+    except json.JSONDecodeError:
+        repaired = _repair_truncated_json(clean)
+        if repaired:
+            try:
+                return json.loads(repaired)
+            except json.JSONDecodeError:
+                pass
+        raise ValueError(
+            f"[bill_analyzer] Bill analysis failed — LLM returned invalid JSON.\n"
+            f"This likely means max_new_tokens is too low and the response was truncated.\n"
+            f"Raw output ({len(raw)} chars): {raw[:300]}"
+        )
+
+
+def _repair_truncated_json(s: str) -> str:
+    """
+    Best-effort repair of a truncated JSON string.
+    Closes any open string, then appends enough closing braces/brackets
+    to make the structure valid.
+    """
+    s = s.rstrip()
+    # If ends mid-string, close the string
+    # Count unescaped quotes to determine if we're inside a string
+    in_string = False
+    i = 0
+    while i < len(s):
+        c = s[i]
+        if c == '\\' and in_string:
+            i += 2
+            continue
+        if c == '"':
+            in_string = not in_string
+        i += 1
+    if in_string:
+        s += '"'
+    # Remove trailing comma before closing
+    s = s.rstrip().rstrip(',')
+    # Count unclosed braces and brackets
+    depth_brace = s.count('{') - s.count('}')
+    depth_bracket = s.count('[') - s.count(']')
+    s += ']' * max(depth_bracket, 0)
+    s += '}' * max(depth_brace, 0)
+    return s
 
 
 def _stub_analysis(bill_text: str) -> dict:

@@ -1,0 +1,186 @@
+{
+  "session_id": "session_20260401_a57c0d",
+  "bill_title": "Climate Action Act 2026",
+  "final_result": "REJECTED",
+  "chamber_results": {
+    "senate": {
+      "chamber": "senate",
+      "passed": false,
+      "yes_count": 5,
+      "no_count": 10,
+      "total": 15,
+      "threshold": 0.5,
+      "required_yes": 7,
+      "vote_breakdown": [
+        {
+          "agent": "John Thune",
+          "vote": "YES",
+          "probability": 0.7816
+        },
+        {
+          "agent": "John Barrasso",
+          "vote": "YES",
+          "probability": 0.8952
+        },
+        {
+          "agent": "Mitch McConnell",
+          "vote": "YES",
+          "probability": 0.8144
+        },
+        {
+          "agent": "Chuck Grassley",
+          "vote": "YES",
+          "probability": 0.7252
+        },
+        {
+          "agent": "Susan Collins",
+          "vote": "NO",
+          "probability": 0.4138
+        },
+        {
+          "agent": "Lisa Murkowski",
+          "vote": "NO",
+          "probability": 0.3541
+        },
+        {
+          "agent": "John Cornyn",
+          "vote": "YES",
+          "probability": 0.7741
+        },
+        {
+          "agent": "Chuck Schumer",
+          "vote": "NO",
+          "probability": 0.1944
+        },
+        {
+          "agent": "Dick Durbin",
+          "vote": "NO",
+          "probability": 0.2105
+        },
+        {
+          "agent": "Patty Murray",
+          "vote": "NO",
+          "probability": 0.1257
+        },
+        {
+          "agent": "Ron Wyden",
+          "vote": "NO",
+          "probability": 0.1544
+        },
+        {
+          "agent": "Maria Cantwell",
+          "vote": "NO",
+          "probability": 0.107
+        },
+        {
+          "agent": "Amy Klobuchar",
+          "vote": "NO",
+          "probability": 0.2298
+        },
+        {
+          "agent": "Sheldon Whitehouse",
+          "vote": "NO",
+          "probability": 0.0669
+        },
+        {
+          "agent": "Bernie Sanders",
+          "vote": "NO",
+          "probability": 0.117
+        }
+      ],
+      "transcript_summary": "[Round 1] John Thune (R): Senator Thune: \"I rise in opposition to this Climate Action Act of 2026. As a proud representative of South Dakota, I've always been committed to protecting our agricultural interests and the livelihoods of our farmers and ranchers. This bill's aggressive emission reduction targets, particularly for the agricultural sector, will lead to skyrocketing energy costs and threaten the very foundation of our rural economy, as seen in the devastating effects of the 2012 drought, where the Farm Bill's price controls and ethanol subsidies failed to mitigate the damage.\"\n\n(Referencing his seniority and committee jurisdiction) \"As the Chairman of the Agriculture Committee, I've worked tirelessly to support our nation's farmers and ranchers, and I will not stand idly by while this bill's provisions could further strangle our agricultural industry. The American people expect us to take action on climate change, but we must do so in a way that balances our environmental concerns with the needs of our nation's economy and the people who depend on it.\"\n[Round 1] John Barrasso (R): \"I strongly oppose this Climate Action Act of 2026, which would devastate Wyoming's coal industry and undermine our state's energy independence. As the Majority Whip, I've seen firsthand the devastating impact of overregulation on our economy, particularly in the energy sector. The bill's proposed emission reduction targets, which would require a 50% reduction in greenhouse gas emissions by 2030, would be particularly crippling for our state, where coal is a significant source of energy production and employment \u2013 just last year, Wyoming coal mines employed over 12,000 workers and generated over $6 billion in economic activity.\"\n[Round 1] Mitch McConnell (R): Senator Thune and Senator Barrasso, I appreciate your passionate arguments, but I must respectfully disagree with your characterization of this bill. As a seasoned Senator with 40 years of experience, I've always prioritized the needs of our nation, and this bill's provisions align with that goal. Specifically, I support the bill's emphasis on promoting renewable energy development, which is crucial for our nation's energy security and economic growth, particularly in states like Kentucky, where our coal industry has been impacted by the shift towards cleaner energy sources, and where our agricultural sector benefits from the increased investment in clean energy infrastructure.\n\nRegarding the emission reduction targets, I understand the need for action on climate change, but I believe we can achieve our goals while avoiding the kind of overregulation that would harm our economy. As Chairman of the Rules Committee, I've worked to ensure that our legislative process remains fair and balanced, and I'm committed to working with my colleagues to find common ground on this critical issue.\n[Round 1] Chuck Grassley (R): \"I rise in opposition to this Climate Action Act of 2026, and I must say, I'm disappointed by the lack of specifics on how this bill will address the needs of rural Iowans, particularly farmers and rural communities who are already struggling to make ends meet. As the President Pro Tempore of the Senate, I've seen firsthand the devastating effects of climate change on our nation's agricultural sector, and I'm concerned that this bill's 50% emission reduction target by 2030 will disproportionately harm Iowa's ethanol industry, which has been a critical component of our nation's renewable energy infrastructure. As a proud Iowan, I believe we need a more targeted approach that supports our state's unique needs and doesn't sacrifice the livelihoods of our farmers and rural communities.\"\n[Round 1] Susan Collins (R): Senator Collins: Thank you, Senator Grassley, for your concerns about the impact on rural communities. As a Senator from Maine, I share your commitment to supporting our nation's agricultural sector, and I'm pleased to see that the Climate Action Act of 2026 includes provisions that prioritize rural areas in its renewable energy development plans, such as the Rural Energy for America Program, which has already helped Maine's farmers and rural communities access affordable clean energy solutions. However, I do have concerns about the bill's emission reduction targets, particularly the 50% reduction by 2030, which I believe is overly ambitious and could disproportionately harm our state's lobster and fishing industries, which are critical to Maine's economy and culture.\n[Round 1] Lisa Murkowski (R): Thank you, Senator Collins, for highlighting the importance of prioritizing rural areas in the bill's renewable energy development plans. As a Senator from Alaska, I strongly support the Climate Action Act of 2026's emphasis on promoting renewable energy development, particularly in our state, where we have an abundance of natural resources and a unique opportunity to lead the nation in clean energy innovation. I also appreciate the bill's inclusion of provisions that address the impacts of climate change on Alaska's indigenous communities, such as the Alaska Native Village Economic Development Corporation, which will help support our Native communities in transitioning to a low-carbon economy and preserving their cultural heritage.\n\nHowever, I do have concerns about the bill's emission reduction targets, particularly the 50% reduction by 2030, which I believe is overly ambitious and could harm our state's economy, particularly in the oil and gas industry, which is a significant contributor to our state's revenue. As the Chair of the Energy Committee, I have worked to promote Alaska's energy resources and ensure that any climate policies do not unfairly burden our state's economy. I urge my colleagues to consider Alaska's unique circumstances and work with me to find a more balanced approach that supports our state's economic interests while addressing the need for climate action.\n\n(As the\n[Round 1] John Cornyn (R): \"I rise in opposition to the Climate Action Act of 2026, which I believe sets unrealistic emission reduction targets, particularly for the agriculture and energy sectors. As a Senator from Texas, I've seen firsthand the devastating effects of overregulation on our economy, and I strongly oppose the bill's provision to cap carbon emissions from the oil and gas industry at 60% below 2005 levels by 2030, which will lead to significant job losses and economic hardship for Texans. My home state is a leading producer of oil and natural gas, and I urge my colleagues to consider the unintended consequences of this bill on our state's energy industry and economy.\"\n[Round 1] Chuck Schumer (D): Senator Collins and Senator Murkowski, I appreciate your thoughtful comments, but I must respectfully disagree with your concerns about the bill's emission reduction targets. As the Chairman of the Rules Committee, I've worked to ensure that our legislative process remains fair and balanced, and I believe that the 50% reduction by 2030 is a necessary step towards addressing the urgent threat of climate change. Specifically, I'm concerned that the bill's provisions for promoting renewable energy development in New York, where our state's financial sector is a significant contributor to greenhouse gas emissions, will help drive economic growth and create new jobs in the clean energy sector, which aligns with our state's economic interests and complements our efforts to reduce carbon emissions.\n[Round 1] Dick Durbin (D): \"I rise in support of the Climate Action Act of 2026, which I believe is a crucial step towards addressing the urgent threat of climate change. As a Senator from Illinois, I'm proud to see that this bill prioritizes promoting renewable energy development, particularly in the Midwest, where our state's agricultural sector benefits from the increased investment in clean energy infrastructure. Specifically, I'm concerned about the bill's provisions to provide $10 billion in grants to support rural communities in developing clean energy projects, which aligns with my long-standing commitment to supporting Illinois' agricultural interests and promoting economic growth in our state.\"\n[Round 1] Patty Murray (D): \"I rise in support of the Climate Action Act of 2026, which I believe is a crucial step towards addressing the urgent threat of climate change. As the Chair of the Appropriations Committee, I'm pleased to see that the bill includes significant funding for clean energy development, particularly in the Pacific Northwest, where our nation's Boeing industry is a major beneficiary of investments in renewable energy infrastructure. Specifically, the bill's provision to provide $5 billion in grants to support rural communities in developing clean energy projects will help promote economic growth in our region and create new jobs, aligning with my long-standing commitment to supporting Washington state's aerospace industry and promoting sustainable development in our state.\"\n[Round 1] Ron Wyden (D): Senator Collins and Senator Murkowski, I appreciate your thoughtful comments on the Climate Action Act of 2026. As a Senator from Oregon, I strongly support the bill's provisions to promote renewable energy development, particularly in the western states, where our nation's clean energy sector is a significant contributor to our economy and job growth. However, I do have concerns about the bill's 50% emission reduction target by 2030, which may disproportionately harm Oregon's agriculture and forestry industries, particularly in the context of our state's unique forest management challenges and the economic impacts of climate change on our timber industry, which I've worked to address through the Forest Management Assistance Act of 2018.\n[Round 1] Maria Cantwell (D): Senator, I rise to address the Climate Action Act of 2026. As a Senator from Washington, I'm committed to promoting clean energy development and addressing the urgent threat of climate change, but I have concerns about the bill's 50% emission reduction target by 2030, which I believe could disproportionately harm our state's aerospace industry, which is a significant contributor to Washington's economy. Specifically, I'm concerned that the bill's provisions to cap carbon emissions from the aviation sector at 50% below 2005 levels by 2030 could lead to significant job losses and economic hardship for our state's aerospace workers, who are already struggling with the impacts of trade tensions with China and the ongoing transition to electric and hybrid aircraft.\n[Round 1] Amy Klobuchar (D): Thank you, Senator. As a Senator from Minnesota, I strongly support the Climate Action Act of 2026 because it includes provisions that promote renewable energy development, particularly in the Midwest, where our state's agricultural sector benefits from the increased investment in clean energy infrastructure. I'm particularly pleased that the bill includes funding for the Rural Energy for America Program, which has helped Minnesota farmers and rural communities access affordable clean energy solutions, and I believe this will be crucial in supporting our state's Iron Range mining jobs and agricultural trade. While I share concerns about the 50% emission reduction target by 2030, I believe that our state's unique circumstances and our record of bipartisan cooperation on issues like the Energy Policy Act of 2005 warrant a more flexible approach that balances our environmental concerns with the needs of our economy.\n[Round 1] Sheldon Whitehouse (D): \"The Climate Action Act of 2026 is a crucial step towards addressing the urgent threat of climate change, and as a Senator from Rhode Island, I'm proud to see that this bill prioritizes promoting renewable energy development, particularly in our region. Specifically, I support the bill's provisions to establish a national renewable portfolio standard, which will help drive economic growth and create new jobs in our state's clean energy sector, particularly in our growing offshore wind industry, which has the potential to generate over 25% of our state's electricity by 2030. By supporting this bill, we'll not only address the environmental impacts of climate change but also ensure a more sustainable future for our nation's economy and our state's coastal communities.\"\n[Round 1] Bernie Sanders (I): \"I rise in support of the Climate Action Act of 2026, which I believe is a crucial step towards addressing the urgent threat of climate change. As a Senator from Vermont, I'm committed to promoting renewable energy development, particularly in our rural areas, where our dairy farmers and rural communities are struggling to access affordable clean energy solutions. Specifically, I support the bill's provisions to provide $1 billion in grants to support rural communities in developing clean energy projects, which will help our state's dairy farmers reduce their carbon footprint and increase their competitiveness in the global market, while also creating new jobs and stimulating local economies.\""
+    }
+  },
+  "votes": {
+    "John Thune": {
+      "vote": "YES",
+      "probability": 0.7816,
+      "reasoning": "I'm voting yes on the Climate Action Act of 2026 because I believe it strikes a balance between addressing the urgent threat of climate change and supporting our nation's economy, particularly in states like South Dakota where our agricultural industry is a significant contributor to our GDP. The bill's provisions to promote renewable energy development, particularly through the Rural Energy for America Program, will help drive economic growth and create new jobs in our state's clean energy sector, and I'm committed to supporting our nation's farmers and ranchers as we transition to a more sustainable energy future. I'm also pleased that the bill includes funding for grants to support rural communities in developing clean energy projects, which will help our state's agricultural sector reduce its carbon footprint and increase its competitiveness in the global market.",
+      "chamber": "senate"
+    },
+    "John Barrasso": {
+      "vote": "YES",
+      "probability": 0.8952,
+      "reasoning": "\"I'm proud to vote in favor of the Climate Action Act of 2026, which I believe is a crucial step towards addressing the urgent threat of climate change. The bill's provisions, particularly the Rural Energy for America Program, will help promote renewable energy development in rural areas like Wyoming, where our coal industry is a significant source of energy production and employment. By supporting this bill, we'll not only address the environmental impacts of climate change but also ensure a more sustainable future for our nation's economy and our state's energy industry.",
+      "chamber": "senate"
+    },
+    "Mitch McConnell": {
+      "vote": "YES",
+      "probability": 0.8144,
+      "reasoning": "I'm pleased to support the Climate Action Act of 2026, as it aligns with my commitment to promoting renewable energy development and addressing the urgent threat of climate change. Specifically, I'm supportive of the bill's provisions to promote clean energy infrastructure development, particularly in states like Kentucky, where our coal industry has been impacted by the shift towards cleaner energy sources. I also appreciate the bill's emphasis on supporting rural areas in developing clean energy projects, which will help our nation's agricultural sector benefit from the increased investment in clean energy infrastructure. **PROS:** * The bill's provisions to promote renewable energy development, particularly in states like Kentucky, will help drive economic growth and create new jobs in our nation's clean energy sector. * The bill's inclusion of funding for the Rural Energy for America Program will help support rural communities in developing clean energy projects, aligning with my commitment to supporting our nation's agricultural sector. **CONS:** * The bill's 50% emission reduction target by 2030 may disproportionately harm our nation's agricultural sector, particularly in states like Iowa and Minnesota, where our agricultural industry is a significant contributor to our economy. * The bill's provisions to cap carbon emissions from the aviation sector at 50% below 2005 levels by",
+      "chamber": "senate"
+    },
+    "Chuck Grassley": {
+      "vote": "YES",
+      "probability": 0.7252,
+      "reasoning": "\"I rise in support of the Climate Action Act of 2026, and I'm pleased to see that it includes provisions that promote renewable energy development, particularly in rural areas. The bill's emphasis on supporting rural communities in developing clean energy projects, such as the Rural Energy for America Program, aligns with my commitment to supporting Iowa's agricultural interests and promoting economic growth in our state. I'm particularly pleased that the bill sets a 50% emission reduction target by 2030, which will drive investment in clean energy infrastructure and create new jobs in our state's clean energy sector. **PROS:** * The bill's provisions to promote renewable energy development, particularly in rural areas, align with my commitment to supporting Iowa's agricultural interests and promoting economic growth in our state. * The bill's inclusion of funding for the Rural Energy for America Program will help Iowa farmers and rural communities access affordable clean energy solutions, which is crucial for our state's agricultural sector. **CONS:** * The bill's 50% emission reduction target by 2030 may disproportionately harm Iowa's ethanol industry, which is a critical component of our nation's renewable energy infrastructure, and I'm concerned that this could lead to significant economic hardship for our state's farmers and rural communities. * The bill",
+      "chamber": "senate"
+    },
+    "Susan Collins": {
+      "vote": "NO",
+      "probability": 0.4138,
+      "reasoning": "I'm voting NO on the Climate Action Act of 2026 because the bill's 50% emission reduction target by 2030 will disproportionately harm Maine's lobster and fishing industries, which are critical to our state's economy and culture. Specifically, I'm concerned that the bill's provisions to cap carbon emissions from the fishing industry at 50% below 2005 levels by 2030 will lead to significant job losses and economic hardship for our state's fishermen and coastal communities. I also worry that the bill's provisions for promoting renewable energy development, while well-intentioned, may not be sufficient to offset the economic impacts of climate change on our state's fishing industry.",
+      "chamber": "senate"
+    },
+    "Lisa Murkowski": {
+      "vote": "NO",
+      "probability": 0.3541,
+      "reasoning": "I'm voting NO on the Climate Action Act of 2026 because the bill's 50% emission reduction target by 2030, particularly for the oil and gas industry, would have a disproportionate impact on Alaska's economy, which relies heavily on these industries. I also have concerns about the bill's provisions, such as the cap on carbon emissions from the oil and gas industry, which could lead to significant job losses and economic hardship for our state. As the Chair of the Energy Committee, I have a deep understanding of Alaska's unique circumstances and the need for a more balanced approach to climate action.",
+      "chamber": "senate"
+    },
+    "John Cornyn": {
+      "vote": "YES",
+      "probability": 0.7741,
+      "reasoning": "\"I'm voting YES on the Climate Action Act of 2026 because I believe its provisions to promote renewable energy development, particularly in Texas, align with our state's energy interests and economic growth. The bill's provisions to provide $10 billion in grants to support rural communities in developing clean energy projects will help our state's oil and gas industry transition to cleaner energy sources, creating new jobs and stimulating local economies. I'm also pleased that the bill includes funding for the Rural Energy for America Program, which has helped Texas farmers and rural communities access affordable clean energy solutions.",
+      "chamber": "senate"
+    },
+    "Chuck Schumer": {
+      "vote": "NO",
+      "probability": 0.1944,
+      "reasoning": "I'm voting NO on the Climate Action Act of 2026 because, despite its well-intentioned provisions, I'm concerned that the 50% emission reduction target by 2030 would disproportionately harm New York's financial sector, which is a significant contributor to greenhouse gas emissions. Additionally, I'm worried that the bill's emphasis on renewable energy development in the western states, such as Oregon and Washington, would overlook the unique needs of our nation's financial sector, which is a critical component of our economy. As the Chairman of the Rules Committee, I've worked to ensure that our legislative process remains fair and balanced, and I believe that this bill's provisions would undermine that balance.",
+      "chamber": "senate"
+    },
+    "Dick Durbin": {
+      "vote": "NO",
+      "probability": 0.2105,
+      "reasoning": "\"I'm voting NO on the Climate Action Act of 2026 because the bill's 50% emission reduction target by 2030 is overly ambitious and will disproportionately harm rural communities, particularly farmers and rural communities in states like Illinois, where our agricultural sector benefits from the increased investment in clean energy infrastructure. I'm particularly concerned that the bill's provisions to cap carbon emissions from the agriculture and energy sectors will lead to significant economic hardship and job losses in these communities. As a Senator from Illinois, I've seen firsthand the devastating effects of overregulation on our economy, and I believe we need a more targeted approach that balances our environmental concerns with the needs of our nation's economy.",
+      "chamber": "senate"
+    },
+    "Patty Murray": {
+      "vote": "NO",
+      "probability": 0.1257,
+      "reasoning": "I'm voting NO on the Climate Action Act of 2026 because I'm concerned that the bill's 50% emission reduction target by 2030 would disproportionately harm Washington state's aerospace industry, which is a significant contributor to our economy. Specifically, I'm worried that the bill's provisions to cap carbon emissions from the aviation sector at 50% below 2005 levels by 2030 could lead to significant job losses and economic hardship for our state's aerospace workers, who are already struggling with the impacts of trade tensions with China and the ongoing transition to electric and hybrid aircraft. As a Senator from Washington, I have a responsibility to protect the interests of our state's workers and businesses, and I believe this provision would do just that.",
+      "chamber": "senate"
+    },
+    "Ron Wyden": {
+      "vote": "NO",
+      "probability": 0.1544,
+      "reasoning": "\"I'm voting NO on the Climate Action Act of 2026 because the bill's 50% emission reduction target by 2030, particularly for the agriculture and energy sectors, may disproportionately harm Oregon's agriculture and forestry industries, which I've worked to address through the Forest Management Assistance Act of 2018. I'm also concerned that the bill's provisions for promoting renewable energy development, while well-intentioned, may not be adequately addressed in our nation's rural areas, where our nation's clean energy sector is a significant contributor to our economy and job growth. The bill's lack of specifics on how to address these concerns in a balanced manner is a major concern for me.",
+      "chamber": "senate"
+    },
+    "Maria Cantwell": {
+      "vote": "NO",
+      "probability": 0.107,
+      "reasoning": "I rise to vote against the Climate Action Act of 2026 due to its overly ambitious 50% emission reduction target by 2030, which I believe will disproportionately harm Washington's aerospace industry, a significant contributor to our state's economy. Specifically, the bill's provisions to cap carbon emissions from the aviation sector at 50% below 2005 levels by 2030 could lead to significant job losses and economic hardship for our state's aerospace workers. As a Senator with a strong focus on promoting clean energy development and addressing the urgent threat of climate change, I am concerned that this approach may not be the most effective way to achieve our goals.",
+      "chamber": "senate"
+    },
+    "Amy Klobuchar": {
+      "vote": "NO",
+      "probability": 0.2298,
+      "reasoning": "I'm voting NO on the Climate Action Act of 2026 because, while I support promoting renewable energy development and addressing climate change, I have concerns about the bill's 50% emission reduction target by 2030, which I believe is overly ambitious and could disproportionately harm our nation's agricultural sector, particularly in states like Minnesota where our Iron Range mining jobs and agricultural trade are crucial to our economy. Specifically, the bill's provisions to cap carbon emissions from agriculture and energy sectors are too broad and could lead to significant job losses and economic hardship for rural communities. I also worry that the bill's lack of flexibility and one-size-fits-all approach will hinder our ability to address the unique challenges facing our state's agricultural sector.",
+      "chamber": "senate"
+    },
+    "Sheldon Whitehouse": {
+      "vote": "NO",
+      "probability": 0.0669,
+      "reasoning": "I'm voting NO on the Climate Action Act of 2026 because the bill's 50% emission reduction target by 2030, particularly for the agriculture and energy sectors, would lead to significant economic hardship for my home state of Rhode Island, where the offshore wind industry is a crucial component of our state's clean energy sector. I'm also concerned that the bill's provisions to cap carbon emissions from the oil and gas industry at 60% below 2005 levels by 2030 would harm the energy security of my state and the nation. Furthermore, I'm troubled by the bill's lack of specifics on how it will address the needs of rural communities, particularly farmers and rural communities who are already struggling to access affordable clean energy solutions.",
+      "chamber": "senate"
+    },
+    "Bernie Sanders": {
+      "vote": "NO",
+      "probability": 0.117,
+      "reasoning": "I rise to vote NO on the Climate Action Act of 2026, citing the bill's overly ambitious emission reduction targets, which I believe will disproportionately harm rural areas and our dairy farmers. The bill's provisions to cap carbon emissions from the agriculture and energy sectors at 50% below 2005 levels by 2030 will lead to skyrocketing energy costs and threaten the livelihoods of our rural communities, particularly in Vermont. As a Senator from Vermont, I've seen firsthand the devastating effects of climate change on our state's dairy industry, and I will not support a bill that exacerbates these challenges.",
+      "chamber": "senate"
+    }
+  }
+}

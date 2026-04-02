@@ -62,7 +62,7 @@ Frame your recommendation from your department's perspective and your policy exp
               should count more than low-influence ones.
         """
         if self.llm is None:
-            return f"[{self.name} STUB] Recommend reviewing this bill carefully."
+            raise RuntimeError(f"Agent '{self.name}' has no LLM. Pass llm= at instantiation.")
 
         from langchain_core.messages import HumanMessage, SystemMessage
 
@@ -127,10 +127,26 @@ def make_president_decision(
     decision = "VETO" if veto_probability > 0.5 else "SIGN"
 
     # Generate presidential statement
-    reasoning = f"[STUB] The President will {decision} this legislation."
+    reasoning = f"The President has decided to {decision} this legislation."
     if llm is not None:
-        # TODO: Implement LLM call for presidential statement
-        pass
+        from langchain_core.messages import HumanMessage, SystemMessage
+        name = president_profile.get("name", "The President")
+        party = president_profile.get("party", "")
+        cabinet_summary = "\n".join(
+            f"  {adv_name}: {str(advice)[:120]}" for adv_name, advice in cabinet_advice.items()
+        )
+        prompt = f"""Cabinet advice received:
+{cabinet_summary}
+
+Heuristic analysis: veto probability = {veto_probability:.2f}
+
+You have decided to {decision} this bill. Write a 2-3 sentence presidential statement \
+in your voice. Reference the bill's policy impact. Do not start with "I"."""
+        response = llm.invoke([
+            SystemMessage(content=f"You are {name}, President of the United States ({party} party). Speak with presidential authority and gravity."),
+            HumanMessage(content=prompt),
+        ])
+        reasoning = response.content if hasattr(response, "content") else str(response)
 
     return ExecutiveDecision(
         decision=decision,

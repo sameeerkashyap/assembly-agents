@@ -20,6 +20,16 @@ import uuid
 
 from langgraph.graph import StateGraph, END, add_messages
 from langgraph.checkpoint.sqlite import SqliteSaver
+from agents.executive_agent import ExecutiveAgent, make_president_decision
+from agents.scotus_agent import SCOTUSAgent
+from agents.senator_agent import SenatorAgent
+from heuristics.bill_analyzer import analyze_bill
+from heuristics.profiles import ProfileStore
+from heuristics.vote_calculator import calculate_vote_probability
+from orchestration.debate_manager import run_debate, build_debate_summary
+from orchestration.vote_aggregator import tally_votes, format_chamber_result
+from llm_factory import get_llm, get_llm_for_votes
+from langchain_community.tools import DuckDuckGoSearchRun
 
 
 # ============================================================================
@@ -76,22 +86,15 @@ def bill_analysis_node(state: ParliamentState) -> dict:
     Calls bill_analyzer.analyze_bill() which uses an LLM to extract:
       issueWeights, issuePositions, partySupport, affectedIndustries,
       constitutionalIssues, controversy_level, factions.
-
-    TODO: Wire in the LLM client here. Use ChatAnthropic with haiku model.
-          from langchain_anthropic import ChatAnthropic
-          llm = ChatAnthropic(model="claude-haiku-4-5-20251001", max_tokens=1500)
-
-    TODO: Add speaker research via Tavily/web search for additional context.
-          The Speaker agent in ai-gov-simulator scrapes web for bill background.
-          Use langchain_community.tools.TavilySearchResults.
     """
-    from heuristics.bill_analyzer import analyze_bill
+    search = DuckDuckGoSearchRun()
+    web_context = search.invoke(f"{state['bill_title']} legislation summary")
+
     print(f"\n[BILL ANALYSIS] Analyzing: {state['bill_title']}")
 
-    # TODO: Pass real LLM here instead of None
-    bill_analysis = analyze_bill(state["bill_text"], llm=None)
+    bill_analysis = analyze_bill(state["bill_text"], llm=get_llm(max_new_tokens=5000), context=web_context)
     print(f"  Party support: {bill_analysis.get('partySupport')}")
-    print(f"  Controversy: {bill_analysis.get('controversy_level'):.2f}")
+    print(f"  Controversy: {bill_analysis.get('controversy_level', 0.0):.2f}")
     print(f"  Top issues: {[k for k, v in bill_analysis.get('issueWeights', {}).items() if v > 0.4]}")
 
     return {
@@ -121,28 +124,35 @@ def senate_chamber_node(state: ParliamentState) -> dict:
     print(f"\n[SENATE] Starting Senate debate on: {state['bill_title']}")
     print(f"  Rounds: {state['max_rounds']}")
 
-    # TODO: Replace stub with real agent + debate execution
-    # from heuristics.profiles import ProfileStore
-    # from agents.senator_agent import SenatorAgent
-    # from orchestration.debate_manager import run_debate
-    # from orchestration.vote_aggregator import tally_votes, format_chamber_result
-    #
-    # store = ProfileStore()
-    # profiles = store.get_roster("senate", n=state["n_agents"])
-    # agents = [SenatorAgent(p, llm=_get_llm()) for p in profiles]
-    # debate_history, vote_records = run_debate(
-    #     agents, state["bill_title"], state["bill_analysis"]["summary"],
-    #     state["bill_analysis"], n_rounds=state["max_rounds"]
-    # )
-    # result = tally_votes(vote_records, chamber="senate")
-    # print(format_chamber_result(result))
-    # return {"chamber_results": {**state.get("chamber_results", {}), "senate": result.__dict__}, ...}
+    store = ProfileStore()
+    profiles = store.get_roster("senate", n=state["n_agents"])
+    debate_llm = get_llm(max_new_tokens=256, temperature=0.8)
+    vote_llm = get_llm_for_votes(max_new_tokens=512, temperature=0.4)
+    agents = [SenatorAgent(p, llm=debate_llm, vote_llm=vote_llm) for p in profiles]
+    bill_summary = state["bill_analysis"].get("summary", state["bill_title"])
+    debate_history, vote_records = run_debate(
+        agents, state["bill_title"], bill_summary,
+        state["bill_analysis"], n_rounds=state["max_rounds"]
+    )
+    result = tally_votes(vote_records, chamber="senate")
+    result.transcript_summary = build_debate_summary(debate_history)
 
+    print(format_chamber_result(result))
     return {
         "current_chamber": "senate",
-        "vote_result": "PASSED",   # TODO: Replace with real result
-        "vote_tally": {"YES": 6, "NO": 4},  # TODO: Replace
-        "chamber_results": {"senate": {"passed": True, "yes": 6, "no": 4}},
+        "vote_result": "PASSED" if result.passed else "REJECTED",
+        "vote_tally": {"YES": result.yes_count, "NO": result.no_count},
+        "votes": {
+            r.agent_name: {
+                "vote": r.vote,
+                "probability": r.vote_probability,
+                "reasoning": r.reasoning,
+                "chamber": "senate",
+            }
+            for r in vote_records
+        },
+        "active_agent_names": [a.name for a in agents],
+        "chamber_results": {**state.get("chamber_results", {}), "senate": result.__dict__},
     }
 
 
@@ -162,13 +172,45 @@ def executive_chamber_node(state: ParliamentState) -> dict:
     """
     print(f"\n[EXECUTIVE] Cabinet deliberating on: {state['bill_title']}")
 
-    # TODO: Replace stub with real executive decision logic
+    store = ProfileStore()
+    all_profiles = store.get_roster("executive")
+    president_profile = next((p for p in all_profiles if p.get("role") == "President"), None)
+    if president_profile is None:
+        raise ValueError("No President profile found in executive roster")
+    cabinet_profiles = [p for p in all_profiles if p.get("role") != "President"]
+
+    senate_result = state.get("chamber_results", {}).get("senate", {})
+    debate_summary = senate_result.get("transcript_summary", "No prior congressional debate available.")
+    bill_summary = state["bill_analysis"].get("summary", state["bill_title"])
+
+    llm = get_llm(max_new_tokens=256, temperature=0.7)
+    cabinet_advice = {}
+    for profile in cabinet_profiles:
+        agent = ExecutiveAgent(profile, llm=llm)
+        cabinet_advice[agent.name] = agent.advise(state["bill_title"], bill_summary, debate_summary)
+
+    exec_decision = make_president_decision(
+        president_profile,
+        state["bill_analysis"],
+        cabinet_advice,
+        llm=llm,
+    )
+
+    decision_label = "SIGNED" if exec_decision.decision == "SIGN" else "VETOED"
+    print(f"  Presidential decision: {decision_label} (veto_probability={exec_decision.veto_probability:.2f})")
+
     return {
         "current_chamber": "executive",
-        "vote_result": "SIGNED",   # TODO: Replace with make_president_decision()
+        "vote_result": decision_label,
         "chamber_results": {
             **state.get("chamber_results", {}),
-            "executive": {"decision": "SIGNED"},
+            "executive": {
+                "passed": exec_decision.decision == "SIGN",
+                "decision": decision_label,
+                "reasoning": exec_decision.reasoning,
+                "veto_probability": exec_decision.veto_probability,
+                "cabinet_advice": exec_decision.cabinet_advice,
+            },
         },
     }
 
@@ -188,14 +230,55 @@ def scotus_chamber_node(state: ParliamentState) -> dict:
           and pass those to each justice's deliberate() call.
     """
     print(f"\n[SCOTUS] Constitutional review of: {state['bill_title']}")
+    from heuristics.vote_calculator import calculate_vote_probability
 
-    # TODO: Replace stub
+    store = ProfileStore()
+    profiles = store.get_roster("scotus")  # always all 9 justices
+    constitutional_issues = state["bill_analysis"].get("constitutionalIssues", {})
+
+    deliberation_llm = get_llm(max_new_tokens=256, temperature=0.7)
+    ruling_llm = get_llm_for_votes(max_new_tokens=512, temperature=0.3)
+    agents = [SCOTUSAgent(p, llm=deliberation_llm, vote_llm=ruling_llm) for p in profiles]
+
+    # 2-round conference deliberation
+    deliberation_history: list[dict] = []
+    for round_num in range(1, 3):
+        print(f"\n[SCOTUS DELIBERATION ROUND {round_num}/2]")
+        for agent in agents:
+            statement = agent.deliberate(state["bill_title"], constitutional_issues, deliberation_history, round_num)
+            deliberation_history.append({"agent": agent.name, "round": round_num, "statement": statement})
+            print(f"  {agent.name}: {statement[:80]}...")
+
+    # Vote — use vote_calculator as uphold_probability proxy
+    print("\n[SCOTUS VOTE]")
+    rulings = []
+    for agent in agents:
+        result = calculate_vote_probability(agent.profile, state["bill_analysis"])
+        ruling = agent.rule(state["bill_title"], constitutional_issues, deliberation_history, result["vote_probability"])
+        rulings.append(ruling)
+        print(f"  {agent.name}: {ruling.ruling} (p={ruling.vote_probability:.2f})")
+
+    uphold_count = sum(1 for r in rulings if r.ruling == "UPHOLD")
+    strike_count = len(rulings) - uphold_count
+    final_ruling = "UPHELD" if uphold_count >= 5 else "STRUCK_DOWN"
+    print(f"\n[SCOTUS] {final_ruling} — {uphold_count} uphold / {strike_count} strike")
+
     return {
         "current_chamber": "scotus",
-        "vote_result": "UPHELD",   # TODO: Replace
+        "vote_result": final_ruling,
+        "vote_tally": {"UPHOLD": uphold_count, "STRIKE_DOWN": strike_count},
         "chamber_results": {
             **state.get("chamber_results", {}),
-            "scotus": {"ruling": "UPHELD"},
+            "scotus": {
+                "passed": final_ruling == "UPHELD",
+                "ruling": final_ruling,
+                "uphold_count": uphold_count,
+                "strike_count": strike_count,
+                "vote_breakdown": [
+                    {"justice": r.justice_name, "ruling": r.ruling, "basis": r.constitutional_basis}
+                    for r in rulings
+                ],
+            },
         },
     }
 
@@ -217,20 +300,48 @@ def final_summary_node(state: ParliamentState) -> dict:
     print(f"\n[SUMMARY] Generating proceedings summary...")
     chamber_results = state.get("chamber_results", {})
 
-    # Build summary from chamber results
     lines = [
-        f"DEMOCRATIC AGENTS — SESSION RECORD",
-        f"Session ID: {state['session_id']}",
-        f"Bill: {state['bill_title']}",
-        f"Date: {state['timestamp']}",
+        "=" * 72,
+        "DEMOCRATIC AGENTS — SESSION RECORD",
+        f"Session ID : {state['session_id']}",
+        f"Bill       : {state['bill_title']}",
+        f"Date       : {state['timestamp']}",
+        "=" * 72,
         "",
     ]
     for chamber, result in chamber_results.items():
-        lines.append(f"[{chamber.upper()}] {result}")
+        if chamber == "senate":
+            status = "PASSED" if result.get("passed") else "FAILED"
+            lines.append(f"[SENATE]    {status} — {result.get('yes_count', '?')} YES / {result.get('no_count', '?')} NO")
+        elif chamber == "house":
+            status = "PASSED" if result.get("passed") else "FAILED"
+            lines.append(f"[HOUSE]     {status} — {result.get('yes_count', '?')} YES / {result.get('no_count', '?')} NO")
+        elif chamber == "executive":
+            lines.append(f"[EXECUTIVE] {result.get('decision', '?')} (veto_probability={result.get('veto_probability', '?')})")
+            if result.get("reasoning"):
+                lines.append(f"            {result['reasoning']}")
+        elif chamber == "scotus":
+            lines.append(f"[SCOTUS]    {result.get('ruling', '?')} — {result.get('uphold_count', '?')} uphold / {result.get('strike_count', '?')} strike")
 
-    lines.append(f"\nFINAL RESULT: {state.get('vote_result', 'N/A')}")
+    lines += ["", f"FINAL RESULT: {state.get('vote_result', 'N/A')}", "=" * 72]
     summary = "\n".join(lines)
     print(summary)
+
+    import json, os
+    os.makedirs("output/transcripts", exist_ok=True)
+    os.makedirs("output/votes", exist_ok=True)
+    sid = state["session_id"]
+    with open(f"output/transcripts/{sid}.md", "w") as f:
+        f.write(summary)
+    with open(f"output/votes/{sid}.json", "w") as f:
+        json.dump({
+            "session_id": sid,
+            "bill_title": state["bill_title"],
+            "final_result": state.get("vote_result"),
+            "chamber_results": chamber_results,
+            "votes": state.get("votes", {}),
+        }, f, indent=2, default=str)
+
     return {"proceedings_summary": summary}
 
 
@@ -245,9 +356,72 @@ def save_to_database_node(state: ParliamentState) -> dict:
       These records are used by agents in future sessions to retrieve memory
       of how they voted on similar bills.
     """
+    import sqlite3, json, os
+
     print(f"\n[DATABASE] Saving session {state['session_id']}...")
-    # TODO: Implement explicit DB writes (LangGraph checkpointer handles graph state,
-    #       but we need custom tables for agent memory retrieval)
+    os.makedirs("data", exist_ok=True)
+    db_path = "data/parliament.db"
+
+    with sqlite3.connect(db_path) as conn:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS sessions (
+                session_id   TEXT PRIMARY KEY,
+                bill_title   TEXT,
+                bill_text    TEXT,
+                final_result TEXT,
+                timestamp    TEXT
+            )
+        """)
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS agent_decisions (
+                id           INTEGER PRIMARY KEY AUTOINCREMENT,
+                session_id   TEXT,
+                chamber      TEXT,
+                agent_name   TEXT,
+                vote         TEXT,
+                probability  REAL,
+                reasoning    TEXT
+            )
+        """)
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS debate_transcript (
+                id         INTEGER PRIMARY KEY AUTOINCREMENT,
+                session_id TEXT,
+                chamber    TEXT,
+                round_num  INTEGER,
+                agent_name TEXT,
+                statement  TEXT
+            )
+        """)
+
+        # sessions row
+        conn.execute(
+            "INSERT OR REPLACE INTO sessions VALUES (?, ?, ?, ?, ?)",
+            (state["session_id"], state["bill_title"], state["bill_text"],
+             state.get("vote_result"), state["timestamp"]),
+        )
+
+        # agent_decisions — one row per vote stored in state["votes"]
+        for agent_name, v in state.get("votes", {}).items():
+            conn.execute(
+                "INSERT INTO agent_decisions (session_id, chamber, agent_name, vote, probability, reasoning) VALUES (?, ?, ?, ?, ?, ?)",
+                (state["session_id"], v.get("chamber", ""), agent_name,
+                 v.get("vote"), v.get("probability"), v.get("reasoning", "")),
+            )
+
+        # debate_transcript — stored inside chamber_results transcript_summary is a
+        # flat string; we persist it as a single row per chamber for memory retrieval
+        for chamber, result in state.get("chamber_results", {}).items():
+            transcript = result.get("transcript_summary", "")
+            if transcript:
+                conn.execute(
+                    "INSERT INTO debate_transcript (session_id, chamber, round_num, agent_name, statement) VALUES (?, ?, ?, ?, ?)",
+                    (state["session_id"], chamber, 0, "FULL_TRANSCRIPT", transcript),
+                )
+
+        conn.commit()
+
+    print(f"  Saved to {db_path}")
     return {}
 
 
@@ -265,14 +439,12 @@ def route_after_senate(state: ParliamentState) -> Literal["executive", "summariz
 
 
 def route_after_executive(state: ParliamentState) -> Literal["scotus", "summarize"]:
-    """Route: if signed, optionally go to SCOTUS. If vetoed, go to summary.
-    TODO: Add override_node between executive and summarize for veto override path.
-    TODO: Make SCOTUS review optional (only when constitutional challenge is flagged).
-    """
+    """Route: if signed and bill raises constitutional issues, go to SCOTUS. Otherwise summarize."""
     exec_result = state.get("chamber_results", {}).get("executive", {})
     if exec_result.get("decision") == "SIGNED":
-        return "scotus"   # TODO: Make conditional on whether SCOTUS review is warranted
-    state["vote_result"] = "VETOED"
+        const_issues = state.get("bill_analysis", {}).get("constitutionalIssues", {})
+        if any(v > 0.2 for v in const_issues.values()):
+            return "scotus"
     return "summarize"
 
 
@@ -310,7 +482,9 @@ def create_parliament_graph(checkpoint_path: str = "data/parliament.db"):
     workflow.add_edge("save_db", END)
 
     # Checkpointing for session persistence and agent memory
-    memory = SqliteSaver.from_conn_string(checkpoint_path)
+    import sqlite3
+    conn = sqlite3.connect(checkpoint_path, check_same_thread=False)
+    memory = SqliteSaver(conn)
     app = workflow.compile(checkpointer=memory)
 
     return app

@@ -111,22 +111,40 @@ Do not refer to political parties or election outcomes."""
         """
         ruling = "UPHOLD" if uphold_probability > 0.5 else "STRIKE_DOWN"
 
-        if self.llm is None:
-            return ConstitutionalRuling(
-                justice_name=self.name,
-                ruling=ruling,
-                vote_probability=uphold_probability,
-                legal_reasoning=f"[STUB] Justice {self.name} votes to {ruling}.",
-                constitutional_basis="Stub constitutional basis",
-                opinion_type="majority",
-            )
+        if self.vote_llm is None:
+            raise RuntimeError(f"Justice '{self.name}' has no vote LLM. Pass vote_llm= at instantiation.")
 
-        # TODO: Implement full LLM call for judicial opinion
+        from langchain_core.messages import HumanMessage, SystemMessage
+        history_text = self._format_debate_history(debate_history)
+        active_issues = ", ".join(
+            k for k, v in constitutional_issues.items() if v > 0.2
+        ) or "general constitutional principles"
+        prompt = f"""Bill under review: {bill_title}
+Constitutional issues at stake: {active_issues}
+
+Conference deliberation:
+{history_text}
+
+You are voting to {ruling} this legislation. In 2-3 sentences, write your judicial \
+opinion in character. Ground it in constitutional text, precedent, or your judicial \
+philosophy. End with one sentence naming the primary constitutional basis for your ruling."""
+
+        response = self.vote_llm.invoke([
+            SystemMessage(content=self.get_system_prompt()),
+            HumanMessage(content=prompt),
+        ])
+        raw = response.content if hasattr(response, "content") else str(response)
+
+        # Last sentence is the constitutional basis
+        sentences = [s.strip() for s in raw.replace("\n", " ").split(".") if s.strip()]
+        constitutional_basis = sentences[-1] if sentences else "Constitutional principles"
+        legal_reasoning = raw.strip()
+
         return ConstitutionalRuling(
             justice_name=self.name,
             ruling=ruling,
             vote_probability=uphold_probability,
-            legal_reasoning=f"[TODO] Implement LLM judicial opinion for {self.name}.",
-            constitutional_basis="[TODO] Extract from LLM response",
-            opinion_type="majority",
+            legal_reasoning=legal_reasoning,
+            constitutional_basis=constitutional_basis,
+            opinion_type="majority",  # set post-aggregation by scotus_chamber_node
         )

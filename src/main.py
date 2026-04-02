@@ -93,9 +93,48 @@ def main():
 
     # ── View past session ────────────────────────────────────────────────────
     if args.view_session:
-        # TODO: Implement session replay from SQLite checkpointer
-        # Query data/parliament.db for session_id and print transcript + vote record
-        print(f"[TODO] Session replay not yet implemented. Session ID: {args.view_session}")
+        import sqlite3, json
+        db_path = Path("data/parliament.db")
+        if not db_path.exists():
+            print(f"Error: No database found at {db_path}. Run a session first.")
+            sys.exit(1)
+        with sqlite3.connect(db_path) as conn:
+            conn.row_factory = sqlite3.Row
+            session = conn.execute(
+                "SELECT * FROM sessions WHERE session_id = ?", (args.view_session,)
+            ).fetchone()
+            if not session:
+                print(f"Error: Session '{args.view_session}' not found.")
+                sys.exit(1)
+            print(f"\n{'=' * 72}")
+            print(f"SESSION: {session['session_id']}")
+            print(f"Bill:    {session['bill_title']}")
+            print(f"Result:  {session['final_result']}")
+            print(f"Date:    {session['timestamp']}")
+            print(f"{'=' * 72}")
+
+            # Check for saved transcript file first
+            transcript_path = Path(f"output/transcripts/{args.view_session}.md")
+            if transcript_path.exists():
+                print(transcript_path.read_text())
+            else:
+                # Fall back to DB transcript
+                rows = conn.execute(
+                    "SELECT chamber, statement FROM debate_transcript WHERE session_id = ? ORDER BY id",
+                    (args.view_session,)
+                ).fetchall()
+                for row in rows:
+                    print(f"\n[{row['chamber'].upper()} TRANSCRIPT]\n{row['statement']}")
+
+            print(f"\n{'=' * 72}\nVOTES\n{'=' * 72}")
+            votes = conn.execute(
+                "SELECT agent_name, chamber, vote, probability, reasoning FROM agent_decisions WHERE session_id = ? ORDER BY chamber, agent_name",
+                (args.view_session,)
+            ).fetchall()
+            for v in votes:
+                print(f"  [{v['chamber'].upper()}] {v['agent_name']}: {v['vote']} (p={v['probability']:.2f})")
+                if v['reasoning']:
+                    print(f"    {v['reasoning'][:120]}...")
         sys.exit(0)
 
     # ── Load bill ────────────────────────────────────────────────────────────

@@ -15,6 +15,8 @@ from typing import Optional
 
 from langchain_core.messages import HumanMessage, SystemMessage
 
+from heuristics.vote_calculator import VoteProbabilityResult
+
 
 @dataclass
 class VoteRecord:
@@ -30,7 +32,7 @@ class VoteRecord:
 
 class BaseAgent:
     """
-    A legislative agent whose ideology is anchored by ai-gov-simulator heuristics.
+    A legislative agent whose ideology is anchored by heuristics.
 
     profile: dict loaded from ProfileStore (senate/executive/scotus schema)
     llm:     LangChain BaseChatModel — use haiku for debate, sonnet for vote reasoning
@@ -38,9 +40,10 @@ class BaseAgent:
     TODO: Accept separate debate_llm and vote_llm once cost tuning is done.
     """
 
-    def __init__(self, profile: dict, llm=None):
+    def __init__(self, profile: dict, llm=None, vote_llm=None):
         self.profile = profile
-        self.llm = llm
+        self.llm = llm                  # debate LLM (haiku / local fast)
+        self.vote_llm = vote_llm or llm # vote reasoning LLM (sonnet / local)
         self.name: str = profile.get("name", "Unknown")
         self._system_prompt: Optional[str] = None
 
@@ -111,8 +114,7 @@ Be specific. Cite real policy consequences. Do not break character."""
               in later rounds of a large chamber debate.
         """
         if self.llm is None:
-            # TODO: Remove stub once LLM is wired in
-            return f"[{self.name} - STUB] My position on {bill_title} reflects my constituents' interests."
+            raise RuntimeError(f"Agent '{self.name}' has no debate LLM. Pass llm= at instantiation.")
 
         history_text = self._format_debate_history(debate_history)
         prompt = f"""Bill under debate: {bill_title}
@@ -154,18 +156,8 @@ Be specific to the bill's provisions. Reference your state's interests or your r
         direction = vote_result["vote_direction"]
         probability = vote_result["vote_probability"]
 
-        if self.llm is None:
-            # TODO: Remove stub
-            return VoteRecord(
-                agent_name=self.name,
-                vote=direction,
-                vote_probability=probability,
-                reasoning=f"[STUB] {self.name} votes {direction} based on issue alignment {probability:.2f}.",
-                pros=["Stub pro"],
-                cons=["Stub con"],
-                issue_alignment=vote_result["issue_alignment"],
-                modifiers=vote_result["modifiers"],
-            )
+        if self.vote_llm is None:
+            raise RuntimeError(f"Agent '{self.name}' has no vote LLM. Pass vote_llm= at instantiation.")
 
         history_text = self._format_debate_history(debate_history)
         prompt = f"""Bill: {bill_title}
@@ -186,7 +178,7 @@ CONS (2 bullet points — even if voting YES, acknowledge real concerns):"""
             SystemMessage(content=self.get_system_prompt()),
             HumanMessage(content=prompt),
         ]
-        response = self.llm.invoke(messages)
+        response = self.vote_llm.invoke(messages)
         raw = response.content if hasattr(response, "content") else str(response)
 
         reasoning, pros, cons = self._parse_vote_response(raw)

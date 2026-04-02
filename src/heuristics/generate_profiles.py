@@ -8,7 +8,7 @@ Ported from:
 
 Run once to populate data/*.json before running the simulation:
     python src/heuristics/generate_profiles.py --branch senate
-    python src/heuristics/generate_profiles.py --branch executive
+    python src/heuristcs/generate_profiles.py --branch executive
     python src/heuristics/generate_profiles.py --branch scotus
     python src/heuristics/generate_profiles.py --branch all
 
@@ -264,6 +264,7 @@ def call_api(system: str, prompt: str, retries: int = 3) -> list[dict]:
             start = clean.find("[")
             end = clean.rfind("]") + 1
             if start == -1 or end == 0:
+                print(f"\n  [DEBUG] Raw model output ({len(text)} chars): {repr(text[:500])}")
                 raise json.JSONDecodeError("No JSON array found in response", clean, 0)
             return json.loads(clean[start:end])
         except json.JSONDecodeError as e:
